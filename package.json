@@ -8,6 +8,6 @@
   },
   "scripts": {
     "start": "browser-sync start --server --no-ui --files \"js/**/*.js\"",
-    "server": "browser-sync start --no-open --server --no-ui --files \"js/**/*.js\" --open false"
+    "server": "browser-sync start --no-open --server --no-ui --files \"js/**/*.js\" -b=false"
   }
 }
