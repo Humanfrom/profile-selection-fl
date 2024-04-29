@@ -39,9 +39,9 @@ export class Input{
         })
         this.controller.canvas.addEventListener("wheel", (e)=>{
             if(e.deltaY > 0){
-                this.controller.zoomScale /= 1.5;
+                this.controller.zoomScale /= 1.1;
             }else{
-                this.controller.zoomScale *= 1.5;
+                this.controller.zoomScale *= 1.1;
             }
             if(this.controller.zoomScale <= 0.25){
                 this.controller.zoomScale = 0.5;
