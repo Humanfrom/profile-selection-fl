@@ -1,0 +1,45 @@
+
+/* setting popup colours */
+:root{
+    --pbl-notification-background-color: white;
+    --pbl-notification-border: 1px solid #dfdfdf;
+    --pbl-notification-h1-color: #0193E0;
+    --pbl-notification-text-color: black;
+    --pbl-notification-box-shadow: 0px 1px 15px 5px #dfdfdf;
+}
+
+.pbl-popup{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0.5em 1em;
+
+    width: fit-content;
+    height: fit-content;
+
+    transition: all 1s ease-in-out;
+
+}
+
+.pbl-popup.center{
+    top:50%;
+    transform: translate(-50%, -50%);
+}
+.pbl-popup.top{
+    top:5%;
+    transform: translate(-50%, 0%);
+}
+.pbl-popup.notification{
+    background-color: var(--pbl-notification-background-color);
+    border: var(--pbl-notification-border);
+    -webkit-box-shadow: var(--pbl-notification-box-shadow); 
+    box-shadow: var(--pbl-notification-box-shadow); 
+}
+.pbl-popup.notification > h1{
+
+}
+
+.pbl-popup.moving-out{
+    top: -50%;
+}
