@@ -1,6 +1,83 @@
 import { Solid, Plane, Vector, Point } from "../lib/math.js";
 
 export class Prefabs {
+
+    static headRoot(){
+        
+        var cPoints = [
+            new Point(new Vector(-0.045,0.675)),
+            new Point(new Vector(0.041,1)),
+            new Point(new Vector(0.041,0.675)),
+            new Point(new Vector(-0.045,1)),
+            new Point(new Vector(-0.131,1)),
+            new Point(new Vector(0.127,1)),
+            new Point(new Vector(0.127,1.25)),
+            new Point(new Vector(-0.131,1.25)),
+
+        ];
+
+        for(let i = 0;i < cPoints.length;i++){
+            cPoints[i].position.x *= 1.7;
+            cPoints[i].position.y *= 1.7;
+        }
+
+        var b= new Solid(
+            new Vector(0, 0.05),
+            null,
+            cPoints,
+            ColorTheme[settings.theme].color.pressPoint,
+            ColorTheme[settings.theme].color.rootElement,
+            0.005
+        );
+
+        b.collider = 
+        [
+            0,1,2,
+            0,1,3,
+            4,5,6,
+            5,6,7,
+            4,5,7,
+
+        ];
+
+        b.needleIndex = 0;
+
+        return b;
+    }
+
+    static anvilRoot(){
+        var cPoints = [
+            new Point(new Vector(-0.35,-0.55)),
+            new Point(new Vector(0.35,-0.8)),
+            new Point(new Vector(-0.35,-0.8)),
+            new Point(new Vector(0.35,-0.55)),
+        ];
+
+        for(let i = 0;i < cPoints.length;i++){
+            cPoints[i].position.x *= 1.7;
+            cPoints[i].position.y *= 1.7;
+        }
+
+        var b= new Solid(
+            new Vector(0, 0.05),
+            null,
+            cPoints,
+            ColorTheme[settings.theme].color.pressPoint,
+            ColorTheme[settings.theme].color.rootElement,
+            0.005
+        );
+
+        b.collider = 
+        [
+            0,1,2,
+            0,1,3,
+        ];
+
+        b.needleIndex = 0;
+
+        return b;
+    }
+
     static spawnHead_01(){
 
         var rPoints = [
@@ -54,9 +131,9 @@ export class Prefabs {
             new Point(new Vector(0.,0.)),
 
             new Point(new Vector(-0.0,0.6859)),//10
-            new Point(new Vector(0.176,10)),
-            new Point(new Vector(0.176,0.6859)),
-            new Point(new Vector(-0.0,10)),
+            new Point(new Vector(0.12,1)),
+            new Point(new Vector(0.12,0.6859)),
+            new Point(new Vector(-0.0,1)),
         ];
 
         for(let i = 0;i < cPoints.length;i++){
@@ -186,11 +263,6 @@ export class Prefabs {
                 new Point(new Vector(0.3,-0.8293)),
                 new Point(new Vector(-0.3,-0.8293)),
                 new Point(new Vector(0.3,-0.6493)),
-                
-                new Point(new Vector(-0.35,-0.8293)),
-                new Point(new Vector(0.35,-10.8293)),
-                new Point(new Vector(-0.35,-10.8293)),
-                new Point(new Vector(0.35,-0.8293)),
             ],
             ColorTheme[settings.theme].color.pressPoint,
             ColorTheme[settings.theme].color.press,
@@ -210,9 +282,6 @@ export class Prefabs {
 
             15,17,16,
             15,16,18,
-
-            19,21,20,
-            19,20,22
         ]
 
         return b;
@@ -316,11 +385,6 @@ export class Prefabs {
                 new Point(new Vector(0.3,-0.8293)),
                 new Point(new Vector(-0.3,-0.8293)),
                 new Point(new Vector(0.3,-0.6493)),
-                
-                new Point(new Vector(-0.35,-0.8293)),
-                new Point(new Vector(0.35,-10.8293)),
-                new Point(new Vector(-0.35,-10.8293)),
-                new Point(new Vector(0.35,-0.8293)),
             ],
             ColorTheme[settings.theme].color.pressPoint,
             ColorTheme[settings.theme].color.press,
@@ -342,8 +406,6 @@ export class Prefabs {
     
             15,17,16,
             15,16,18,
-            19,21,20,
-            19,20,22
         ]
 
         return b;
@@ -399,10 +461,10 @@ export class Prefabs {
                 new Point(new Vector(0.045, 0.16)),
                 new Point(new Vector(0, 0)),
             
-                new Point(new Vector(-0.163, 0.81)),//5
-                new Point(new Vector(0.137, 0.81)),
-                new Point(new Vector(-0.163, 10.81)),
-                new Point(new Vector(0.137, 10.81)),
+                new Point(new Vector(-0.2, 0.81)),//5
+                new Point(new Vector(0.0553, 0.81)),
+                new Point(new Vector(-0.2, 1.81)),
+                new Point(new Vector(0.0553, 1.81)),
                 
                 new Point(new Vector(-0.045, 0.16)),
                 new Point(new Vector(0.045, 0.16)),
@@ -516,8 +578,8 @@ export class Prefabs {
             new Point(new Vector(50.2,128.3)),
             new Point(new Vector(50,125.2)),
             new Point(new Vector(36.8,93.5)),
-            new Point(new Vector(36.8,-1000)),
-            new Point(new Vector(49.7,-1000)),
+            new Point(new Vector(36.8,-40)),
+            new Point(new Vector(49.7,-40)),
             new Point(new Vector(49.7,35.5)),
             new Point(new Vector(66.4,35.5)),
             new Point(new Vector(66.4,117.4)),
@@ -637,9 +699,9 @@ export class Prefabs {
             new Point(new Vector(25,25)),
             new Point(new Vector(25,84.2)),
             new Point(new Vector(34.8,84.4)),
-            new Point(new Vector(34.9,10004.1)),
+            new Point(new Vector(34.9,140.1)),
 
-            new Point(new Vector(94.2,10004.1)),
+            new Point(new Vector(94.2,140.1)),
             new Point(new Vector(94.1,84.4)),
             new Point(new Vector(103.8,84.2)),
             new Point(new Vector(103.9,25)),
@@ -741,8 +803,8 @@ export class Prefabs {
             new Point(new Vector(17.2,62.5)),
             new Point(new Vector(17.2,35.5)),
             new Point(new Vector(31.2,35.5)),
-            new Point(new Vector(31.2,-10000)),
-            new Point(new Vector(44.2,-10000)),
+            new Point(new Vector(31.2,-10)),
+            new Point(new Vector(44.2,-10)),
             new Point(new Vector(44.2,49.5)),
             new Point(new Vector(27.2,69)),
             new Point(new Vector(27.2,140.5)),//0 -- 10
@@ -857,8 +919,8 @@ export class Prefabs {
             new Point(new Vector(30,-26.25)),
             new Point(new Vector(20,-30)),
             new Point(new Vector(30,-33.75)),
-            new Point(new Vector(30,-10060)),
-            new Point(new Vector(-30,-10060)),
+            new Point(new Vector(30,-100)),
+            new Point(new Vector(-30,-100)),
             new Point(new Vector(-30,-33.75)),
             new Point(new Vector(-20,-30)),
             new Point(new Vector(-30,-26.75)),
@@ -917,9 +979,9 @@ export class Prefabs {
             new Point(new Vector(21.2,69)),
             new Point(new Vector(17.2,62.5)),
             new Point(new Vector(17.2,35.5)),
-            new Point(new Vector(31.2,35.5)),
-            new Point(new Vector(31.2,-10000)),
-            new Point(new Vector(44.2,-10000)),
+            new Point(new Vector(20.2,35.5)),
+            new Point(new Vector(20.2,4)),
+            new Point(new Vector(44.2,4)),
             new Point(new Vector(44.2,49.5)),
             new Point(new Vector(27.2,69)),
             new Point(new Vector(27.2,140.5)),//0 -- 10
@@ -977,8 +1039,8 @@ export class Prefabs {
             new Point(new Vector(30,-26.25)),
             new Point(new Vector(20,-30)),
             new Point(new Vector(30,-33.75)),
-            new Point(new Vector(30,-10060)),
-            new Point(new Vector(-30,-10060)),
+            new Point(new Vector(30,-100)),
+            new Point(new Vector(-30,-100)),
             new Point(new Vector(-30,-33.75)),
             new Point(new Vector(-20,-30)),
             new Point(new Vector(-30,-26.75)),
@@ -1042,8 +1104,8 @@ export class Prefabs {
             new Point(new Vector(17,105)),
             new Point(new Vector(17,113)),
             new Point(new Vector(20,113)),
-            new Point(new Vector(20,10000)),
-            new Point(new Vector(7,10000)),
+            new Point(new Vector(20,170)),
+            new Point(new Vector(7,170)),
             new Point(new Vector(7,100)),
             new Point(new Vector(-7,100)),
             new Point(new Vector(-7,85)),
@@ -1099,8 +1161,8 @@ export class Prefabs {
             new Point(new Vector(7,0)),
             new Point(new Vector(7,-62)),
             new Point(new Vector(30,-62)),
-            new Point(new Vector(30,-10000)),
-            new Point(new Vector(-30,-1000)),
+            new Point(new Vector(30,-100)),
+            new Point(new Vector(-30,-100)),
             new Point(new Vector(-30,-62)),
             new Point(new Vector(-7,-62)),
             new Point(new Vector(-7,0)),
@@ -1145,10 +1207,10 @@ export class Prefabs {
             new Point(new Vector(1,-11.2)),
             new Point(new Vector(4,0)),
             new Point(new Vector(9,0)),
-            new Point(new Vector(7,-62)),
+            new Point(new Vector(9,-62)),
             new Point(new Vector(30,-62)),
-            new Point(new Vector(30,-10000)),
-            new Point(new Vector(-30,-1000)),
+            new Point(new Vector(30,-100)),
+            new Point(new Vector(-30,-100)),
             new Point(new Vector(-30,-62)),
             new Point(new Vector(-9,-62)),
             new Point(new Vector(-9,0)),
@@ -1196,8 +1258,8 @@ export class Prefabs {
             new Point(new Vector(12,0)),
             new Point(new Vector(12,-62)),
             new Point(new Vector(30,-62)),
-            new Point(new Vector(30,-10000)),
-            new Point(new Vector(-30,-1000)),
+            new Point(new Vector(30,-100)),
+            new Point(new Vector(-30,-100)),
             new Point(new Vector(-30,-62)),
             new Point(new Vector(-12,-62)),
             new Point(new Vector(-12,0)),
@@ -1245,8 +1307,8 @@ export class Prefabs {
             new Point(new Vector(15,0)),
             new Point(new Vector(15,-62)),
             new Point(new Vector(30,-62)),
-            new Point(new Vector(30,-10000)),
-            new Point(new Vector(-30,-1000)),
+            new Point(new Vector(30,-100)),
+            new Point(new Vector(-30,-100)),
             new Point(new Vector(-30,-62)),
             new Point(new Vector(-15,-62)),
             new Point(new Vector(-15,0)),
@@ -1294,8 +1356,8 @@ export class Prefabs {
             new Point(new Vector(17.5,0)),
             new Point(new Vector(17.5,-62)),
             new Point(new Vector(30,-62)),
-            new Point(new Vector(30,-10000)),
-            new Point(new Vector(-30,-1000)),
+            new Point(new Vector(30,-100)),
+            new Point(new Vector(-30,-100)),
             new Point(new Vector(-30,-62)),
             new Point(new Vector(-17.5,-62)),
             new Point(new Vector(-17.5,0)),
@@ -1343,8 +1405,8 @@ export class Prefabs {
             new Point(new Vector(20,0)),
             new Point(new Vector(20,-62)),
             new Point(new Vector(30,-62)),
-            new Point(new Vector(30,-10000)),
-            new Point(new Vector(-30,-1000)),
+            new Point(new Vector(30,-100)),
+            new Point(new Vector(-30,-100)),
             new Point(new Vector(-30,-62)),
             new Point(new Vector(-20,-62)),
             new Point(new Vector(-20,0)),

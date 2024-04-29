@@ -49,7 +49,7 @@ function rotate(dir){
     if(bodies.length < 3 || controller.bendStarted){
         return;
     }
-    bodies[2].rotateAroundPoint(new Vector(), 90 * dir);
+    bodies[4].rotateAroundPoint(new Vector(), 90 * dir);
 }
 
 
@@ -95,8 +95,8 @@ window.addEventListener("load",()=>{
         debug["angle"] = 0;
         debug["draw comb"] = controller.drawCombinations;
 
-        if(bodies[2].points.length > 2){
-            debug["angle"] = nearestAngle(bodies[2].points.length - 2);
+        if(bodies[4].points.length > 2){
+            debug["angle"] = nearestAngle(bodies[4].points.length - 2);
         }
 
         Object.keys(debug).forEach(k=>{
@@ -112,8 +112,8 @@ window.addEventListener("load",()=>{
 
     bend._spawn = spawn;
     bend.test = (()=>{
-        console.log(bodies[2].isColliding(bodies[0]));
-        console.log(bodies[2].isColliding(bodies[1]));
+        console.log(bodies[4].isColliding(bodies[0]));
+        console.log(bodies[4].isColliding(bodies[1]));
     });
     bend._calcBendPoint = calcBendPoint;
     bend.controller = controller;
@@ -287,6 +287,10 @@ function spawn(anvilId, headId){
         }
     }
 
+    
+    bodies.push(Prefabs.headRoot());
+    bodies.push(Prefabs.anvilRoot());
+
     bodies.push(new Plane(
         new Vector(0,0.025),
         bend.length,2,0,
@@ -391,9 +395,9 @@ function calcBendPoint(simEndHandle = null){
         if(bend.currentBend >= bend.initialPoints.length || bend.currentBend == -1){
 
             if(bend.points[bend.points.length - 1].angle > 180){
-                bodies[2].reverse();
+                bodies[4].reverse();
                 draw(true);
-                bodies[2].rotateAroundPoint(bodies[2].position, 180);
+                bodies[4].rotateAroundPoint(bodies[4].position, 180);
                 draw(true);
             }
 
@@ -407,25 +411,25 @@ function calcBendPoint(simEndHandle = null){
             bodies[1] = null;
             bodies[0] = null;
 
-            var p = Math.floor((bodies[2].points.length - 1) / 2);
+            var p = Math.floor((bodies[4].points.length - 1) / 2);
 
-            var dir = Vector.VectorTo(bodies[2].points[0].position, bodies[2].points[0 + 1].position);
+            var dir = Vector.VectorTo(bodies[4].points[0].position, bodies[4].points[0 + 1].position);
             var angle = Vector.angle(dir, new Vector(-1, 0));
             dir = new Vector(0,0);
-            for(let i = 0; i < bodies[2].points.length;i++){
-                dir = dir.plus(bodies[2].points[i].position);
+            for(let i = 0; i < bodies[4].points.length;i++){
+                dir = dir.plus(bodies[4].points[i].position);
             }
 
-            dir = dir.multiply(1 / bodies[2].points.length);
+            dir = dir.multiply(1 / bodies[4].points.length);
 
-            bodies[2].offset(-dir.x, -dir.y);
+            bodies[4].offset(-dir.x, -dir.y);
             
             if(bend.points[bend.points.length - 1].angle > 180){
-                bodies[2].rotateAroundPoint(new Vector(0,0), -angle);
+                bodies[4].rotateAroundPoint(new Vector(0,0), -angle);
             }else{
-                bodies[2].rotateAroundPoint(new Vector(0,0), angle);
+                bodies[4].rotateAroundPoint(new Vector(0,0), angle);
             }
-            bodies[2].position = new Vector(0,0);
+            bodies[4].position = new Vector(0,0);
 
             //true для дебага, false для прода
             if(controller.drawCombinations == false){
@@ -475,26 +479,26 @@ function calcBendPoint(simEndHandle = null){
         
         if(bend.currentBend > 0){
             if(bend.points[bend.currentBend - 1].angle > 180){
-                bodies[2].reverse();
+                bodies[4].reverse();
                 draw(true);
-                bodies[2].rotateAroundPoint(bodies[2].position, 180);
+                bodies[4].rotateAroundPoint(bodies[4].position, 180);
                 draw(true);
             }
         }
 
         while(ds < d){
-            ds += (bodies[2].points[p + 1].position.minus(bodies[2].points[p].position)).length();
+            ds += (bodies[4].points[p + 1].position.minus(bodies[4].points[p].position)).length();
             p++;
         }
         p--;
         if(true){
             
-            bodies[2].position = new Vector(0,0);
+            bodies[4].position = new Vector(0,0);
             bodies[0].position = new Vector(0,0.07068946809815344);
     
             draw(true);
 
-            ds -= (bodies[2].points[p].position.minus(bodies[2].points[p + 1].position)).length();
+            ds -= (bodies[4].points[p].position.minus(bodies[4].points[p + 1].position)).length();
     
             var pointDistance = bend.points[bend.currentBend].distance;
             // if(bend.currentBend > 0 && bend.points[bend.currentBend].distance > bend.points[bend.currentBend - 1].distance){
@@ -517,34 +521,34 @@ function calcBendPoint(simEndHandle = null){
             var pOffset = 0;
 
 
-            bodies[2].addPointAfter(p + pOffset, pointDistance);
+            bodies[4].addPointAfter(p + pOffset, pointDistance);
             draw(true);
 
 
-            bodies[2].updateCollision();
+            bodies[4].updateCollision();
 
             function offset(offset = 0){
                 var _d = bend.points[bend.currentBend].distance;
                 var _ds = 0;
                 var _p = 0;
                 while(_ds - _d <= -0.0001){
-                    _ds += Vector.length(bodies[2].points[_p].position, bodies[2].points[_p + 1].position)
-                    // _ds += (bodies[2].points[_p + 1].position.minus(bodies[2].points[_p].position)).length();
+                    _ds += Vector.length(bodies[4].points[_p].position, bodies[4].points[_p + 1].position)
+                    // _ds += (bodies[4].points[_p + 1].position.minus(bodies[4].points[_p].position)).length();
                     _p++;
                 }
                 _p--;
                 _p += offset;
-                bodies[2].offset(
-                        bodies[2].points[_p + 1].position.x * -1,
-                        bodies[2].points[_p + 1].position.y * -1,
+                bodies[4].offset(
+                        bodies[4].points[_p + 1].position.x * -1,
+                        bodies[4].points[_p + 1].position.y * -1,
                 );
             }
 
 
         
             {
-                var p1 = bodies[2].points[p].position.plus(bodies[2].position);
-                var p2 = bodies[2].points[p + 1].position.plus(bodies[2].position);
+                var p1 = bodies[4].points[p].position.plus(bodies[4].position);
+                var p2 = bodies[4].points[p + 1].position.plus(bodies[4].position);
 
                 var dir = Vector.VectorTo(p1, p2);
                 angle = Vector.angle(dir, new Vector(-1, 0), true);
@@ -566,7 +570,7 @@ function calcBendPoint(simEndHandle = null){
             // }
 
     
-            bodies[2].rotateAroundPoint(bodies[2].position, angle);
+            bodies[4].rotateAroundPoint(bodies[4].position, angle);
             draw(true);
             
             
@@ -575,18 +579,18 @@ function calcBendPoint(simEndHandle = null){
 
             
             if(bend.points[bend.currentBend].angle > 180){
-                bodies[2].reverse();
+                bodies[4].reverse();
                 draw(true);
-                bodies[2].rotateAroundPoint(bodies[2].position, 180);
+                bodies[4].rotateAroundPoint(bodies[4].position, 180);
                 draw(true);
             }
 
-            bodies[2].updateCollision();
-            bodies[2].position.y = 0.05;
+            bodies[4].updateCollision();
+            bodies[4].position.y = 0.05;
             draw(true);
             // {
-            //     var v1 = bodies[2].isColliding(bodies[1]);
-            //     var v0 = bodies[2].isColliding(bodies[0]);
+            //     var v1 = bodies[4].isColliding(bodies[1]);
+            //     var v0 = bodies[4].isColliding(bodies[0]);
             //     if(v1 >= 0 || v0 >= 0){
             //         bend.currentBend = 0;
             //         bend.currentBendOrd++;
@@ -595,9 +599,9 @@ function calcBendPoint(simEndHandle = null){
             //     }
             // }
             var cross = false;
-            for(let i = 0;i < bodies[2].points.length - 1;i++){
-                var p2 = bodies[2].points[i].position.plus(bodies[2].position);
-                var p1 = bodies[2].points[i + 1].position.plus(bodies[2].position);
+            for(let i = 0;i < bodies[4].points.length - 1;i++){
+                var p2 = bodies[4].points[i].position.plus(bodies[4].position);
+                var p1 = bodies[4].points[i + 1].position.plus(bodies[4].position);
     
                 var b = true;
     
@@ -640,19 +644,19 @@ function calcBendPoint(simEndHandle = null){
     
             // bend.bendStarted = false;
         }else{
-            ds -= (bodies[2].points[p].position.minus(bodies[2].points[p + 1].position)).length();
+            ds -= (bodies[4].points[p].position.minus(bodies[4].points[p + 1].position)).length();
 
             
-            bodies[2].offset(
-                bodies[2].points[p].position.x,
-                bodies[2].points[p].position.y,
+            bodies[4].offset(
+                bodies[4].points[p].position.x,
+                bodies[4].points[p].position.y,
             )
 
-            var dir = Vector.VectorTo(bodies[2].points[p].position, bodies[2].points[p + 1].position);
+            var dir = Vector.VectorTo(bodies[4].points[p].position, bodies[4].points[p + 1].position);
             var angle = Vector.angle(dir, new Vector(-1, 0));
             dir = dir.multiply(d - ds);
-            dir = dir.minus(bodies[2].points[p].position);
-            bodies[2].offset(dir.x, dir.y * -1);
+            dir = dir.minus(bodies[4].points[p].position);
+            bodies[4].offset(dir.x, dir.y * -1);
             // bend.bendStarted = false;
 
             angle *= -1;
@@ -663,8 +667,8 @@ function calcBendPoint(simEndHandle = null){
                 }
             }
 
-            bodies[2].rotateAroundPoint(new Vector(0,0), angle);
-            bodies[2].position = new Vector(0,0);
+            bodies[4].rotateAroundPoint(new Vector(0,0), angle);
+            bodies[4].position = new Vector(0,0);
 
             bodies[0].position = new Vector(0,0.07068946809815344);
 
@@ -680,7 +684,7 @@ async function tick(){
         controller.alive += controller.deltaTime;
         _realDeltaTime = controller.deltaTime;
 
-        debug["plane pos"] = bodies[2].position;
+        debug["plane pos"] = bodies[4].position;
 
         if(bend.bendStarted){
             if(!controller.drawCombinations){
@@ -720,7 +724,7 @@ function sleep(ms) {
 
 export async function headTick(){
 
-    if(bodies[0] == null || bodies[1] == null || bodies[2] == null){
+    if(bodies[0] == null || bodies[1] == null || bodies[4] == null){
         return;
     }
     // if(nearestAngle() <= bend.points[bend.currentBend].angle){
@@ -737,9 +741,11 @@ export async function headTick(){
         if(Solid.isColliding(bodies[0],bodies[1]) == false){
             for(let i = 1;i < 10;i++){
                 bodies[0].position.y -= HEAD_SPEED / i * controller.deltaTime;
+                bodies[2].position.y -= HEAD_SPEED / i * controller.deltaTime;
                 if(Solid.isColliding(bodies[0],bodies[1]) == true){
                     bottomPointReached = true;
                     bodies[0].position.y += HEAD_SPEED / i * controller.deltaTime;
+                    bodies[2].position.y += HEAD_SPEED / i * controller.deltaTime;
                 }else{
                     break;
                 }
@@ -762,17 +768,17 @@ export async function headTick(){
 
     debug["colliding"] = false;
 
-    while(bodies[2].isColliding(bodies[0]) >= 0){
+    while(bodies[4].isColliding(bodies[0]) >= 0){
         debug["colliding"] = true;
         var pos = bodies[0].collisionPoints[bodies[0].needleIndex].position.plus(bodies[0].position);
         var force = HEAD_SPEED;
         // if(bend.points[bend.currentBend].angle > 180){
         //     force *= -1;
         // }
-        bodies[2].position.y = pos.y - (force * controller.deltaTime);
+        bodies[4].position.y = pos.y - (force * controller.deltaTime);
         break;
 
-        // bodies[2].position.y -= 0.1 * controller.deltaTime;
+        // bodies[4].position.y -= 0.1 * controller.deltaTime;
     }
 
     var centerPoint = nearestPoint();
@@ -794,32 +800,32 @@ export async function headTick(){
     debug["desired angle"] = desiredAngle;
 
 
-    if(centerPoint != 0 && centerPoint < bodies[2].points.length - 1 && centerPoint != -1 && angle > desiredAngle){
-        debug["needle to bend-p"] = bodies[0].collisionPoints[bodies[0].needleIndex].position.plus(bodies[0].position).minus(bodies[2].points[centerPoint].position.plus(bodies[2].position)).length();
+    if(centerPoint != 0 && centerPoint < bodies[4].points.length - 1 && centerPoint != -1 && angle > desiredAngle){
+        debug["needle to bend-p"] = bodies[0].collisionPoints[bodies[0].needleIndex].position.plus(bodies[0].position).minus(bodies[4].points[centerPoint].position.plus(bodies[4].position)).length();
         col(0, centerPoint, 1);
-        col(bodies[2].points.length - 1, centerPoint, -1);
+        col(bodies[4].points.length - 1, centerPoint, -1);
     }
     // col(
-    //     bodies[2].points.length - 1,
-    //     bodies[2].points.length - 2,
+    //     bodies[4].points.length - 1,
+    //     bodies[4].points.length - 2,
     //     -1);
 
     function col(n1, n2, dir = 1){
 
-        var pos = bodies[2].findNearestSurfaceFromArray(bodies[1].collisionPoints, bodies[1].position);
+        var pos = bodies[4].findNearestSurfaceFromArray(bodies[1].collisionPoints, bodies[1].position);
         pos = pos[0];
         pos.surface = null;
 
         pos.surface = bodies[1].lineCross(
-            bodies[2].points[n2 - dir].position.plus(bodies[2].position),
-            bodies[2].points[n2].position.plus(bodies[2].position)
+            bodies[4].points[n2 - dir].position.plus(bodies[4].position),
+            bodies[4].points[n2].position.plus(bodies[4].position)
         )
 
         if(pos.surface != null){
             var p = bodies[1].findNearestPoints(pos.surface);
 
             var solPoint = bodies[1].collisionPoints[p].position.plus(bodies[1].position);
-            var np = bodies[2].findNearestSurface(solPoint).surface;
+            var np = bodies[4].findNearestSurface(solPoint).surface;
 
             var distance = solPoint.minus(np).length();
 
@@ -827,25 +833,25 @@ export async function headTick(){
             var angle = Vector.angle(
                 Vector.VectorTo(
                     bodies[1].collisionPoints[p].position.plus(bodies[1].position),
-                    bodies[2].points[n2].position.plus(bodies[2].position)
+                    bodies[4].points[n2].position.plus(bodies[4].position)
                 ),
                 Vector.VectorTo(
                     pos.surface,
-                    bodies[2].points[n2].position.plus(bodies[2].position),
+                    bodies[4].points[n2].position.plus(bodies[4].position),
                 )
             );
 
             //rotate by rot-points/surface
             if(angle != 0 && !isNaN(angle) && distance <= DISTANSE_TO_SPAWN_POINT){
                 for(let i = n1; i != n2;i += dir){
-                    bodies[2].points[i].position.rotateAroundPoint(bodies[2].points[n2].position, angle * dir * 2);
+                    bodies[4].points[i].position.rotateAroundPoint(bodies[4].points[n2].position, angle * dir * 2);
                 }
             }else{
-                if(angle != 0 && !isNaN(angle) && (distance > ALONE_RADIUS || true) && bodies[1].isInside(bodies[2].points[n1].position.plus(bodies[2].position))){
-                    while(bodies[1].isInside(bodies[2].points[n1].position.plus(bodies[2].position))){
-                        bodies[2].points[n1].position.rotateAroundPoint(bodies[2].points[n2].position, 45 * dir < 0 ? 0.1 : -0.1);
+                if(angle != 0 && !isNaN(angle) && (distance > ALONE_RADIUS || true) && bodies[1].isInside(bodies[4].points[n1].position.plus(bodies[4].position))){
+                    while(bodies[1].isInside(bodies[4].points[n1].position.plus(bodies[4].position))){
+                        bodies[4].points[n1].position.rotateAroundPoint(bodies[4].points[n2].position, 45 * dir < 0 ? 0.1 : -0.1);
                     }
-                    bodies[2].points[n1].position.rotateAroundPoint(bodies[2].points[n2].position, 45 * dir < 0 ? 1 : -1);
+                    bodies[4].points[n1].position.rotateAroundPoint(bodies[4].points[n2].position, 45 * dir < 0 ? 1 : -1);
                 }
                 // bend.bendStarted = false;
             }
@@ -866,14 +872,14 @@ export async function headTick(){
         
         
         if(bend.points[bend.currentBend].angle > 180){
-            bodies[2].position.y += HEAD_SPEED / -2 * controller.deltaTime;
+            bodies[4].position.y += HEAD_SPEED / -2 * controller.deltaTime;
         }else{
-            bodies[2].position.y += HEAD_SPEED / 2 * controller.deltaTime;
+            bodies[4].position.y += HEAD_SPEED / 2 * controller.deltaTime;
         }
 
-        for(let i = 0;i < bodies[2].points.length - 1;i++){
-            var p1 = bodies[2].points[i].position.plus(bodies[2].position);
-            var p2 = bodies[2].points[i + 1].position.plus(bodies[2].position);
+        for(let i = 0;i < bodies[4].points.length - 1;i++){
+            var p1 = bodies[4].points[i].position.plus(bodies[4].position);
+            var p2 = bodies[4].points[i + 1].position.plus(bodies[4].position);
 
             // i != centerPoint && i - 1 != centerPoint
             var b1 = i != centerPoint;
@@ -940,7 +946,7 @@ export async function headTick(){
 
 
     debug["debug1"] = (bend.points.length > 0 && bend.bendStarted);
-    debug["debug2"] = `${angle <= bend.points[bend.currentBend].angle} && ${Solid.isColliding(bodies[1],bodies[2]) == false}`;
+    debug["debug2"] = `${angle <= bend.points[bend.currentBend].angle} && ${Solid.isColliding(bodies[1],bodies[4]) == false}`;
 
 
     if(bend.points.length > 0 && bend.bendStarted){
@@ -959,7 +965,7 @@ export async function headTick(){
     // debug["bottomReached"] = bottomPointReached;
 
     // (bottomPointReached && cross)
-    if((Solid.isColliding(bodies[1],bodies[2]) && bottomPointReached) || (angle <= desiredAngle && cross)){
+    if((Solid.isColliding(bodies[1],bodies[4]) && bottomPointReached) || (angle <= desiredAngle && cross)){
         // console.clear();
         
         bend.currentBend = 0;
@@ -981,56 +987,56 @@ export async function headTick(){
 }
 
 export function nearestPoint(debug = false){
-    if(bodies[2].points.length == 2){
+    if(bodies[4].points.length == 2){
         return -1;
     }
 
     var bPoint = bodies[0].collisionPoints[bodies[0].needleIndex].position.plus(bodies[0].position);
-    bPoint = bodies[2].position;
+    bPoint = bodies[4].position;
 
-    var nPointInd = bodies[2].findNearestPoints(bPoint);
+    var nPointInd = bodies[4].findNearestPoints(bPoint);
 
     return nPointInd[0];
 }
 
 function nearestAngle(centerPoint){
 
-    if(bodies[0] == null || bodies[1] == null || bodies[2] == null){
+    if(bodies[0] == null || bodies[1] == null || bodies[4] == null){
         return;
     }
     
 
-    if(bodies[2].points.length == 2){
+    if(bodies[4].points.length == 2){
         return 180.0;
     }
 
     var bPoint = bodies[0].collisionPoints[bodies[0].needleIndex].position.plus(bodies[0].position);
 
-    // var nPointInd = bodies[2].findNearestPoints(bPoint)[0];
+    // var nPointInd = bodies[4].findNearestPoints(bPoint)[0];
     var nPointInd = centerPoint;
     if(nPointInd == undefined){
-        nPointInd = bodies[2].findNearestPoints(bPoint)[0];
+        nPointInd = bodies[4].findNearestPoints(bPoint)[0];
         // nPointInd = bodies[0].needleIndex;
     }
     
-    var distance = bPoint.minus(bodies[2].points[nPointInd].position).minus(bodies[0].position).length();
+    var distance = bPoint.minus(bodies[4].points[nPointInd].position).minus(bodies[0].position).length();
     // if(distance > 0.1){
     //     return 180.0;
     // }
 
-    if(nPointInd == 0 || nPointInd == bodies[2].points.length - 1){
+    if(nPointInd == 0 || nPointInd == bodies[4].points.length - 1){
         return 180.0;
     }
 
 
     var v1 = Vector.VectorTo(
-        bodies[2].points[nPointInd].position,
-        bodies[2].points[nPointInd - 1].position
+        bodies[4].points[nPointInd].position,
+        bodies[4].points[nPointInd - 1].position
     );
 
     var v2 = Vector.VectorTo(
-        bodies[2].points[nPointInd].position,
-        bodies[2].points[nPointInd + 1].position
+        bodies[4].points[nPointInd].position,
+        bodies[4].points[nPointInd + 1].position
     );
 
     var a = Math.abs(Vector.angle(v1, v2));
@@ -1058,7 +1064,7 @@ function draw(stepDraw = false){
     controller.ctx.strokeStyle = "green";
 
     // {
-    //     var p1 = bodies[2].position;
+    //     var p1 = bodies[4].position;
     //     var p2 = input.getMousePosition();
     //     var crossPos = bodies[1].lineCross(p2, p1);
     //     controller.ctx.strokeStyle = crossPos == null ? "green" : "red";

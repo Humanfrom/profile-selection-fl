@@ -154,6 +154,7 @@ const ColorTheme = {
             grid: "#f3f3f3",
             canvas: "white",
             text: "black",
+            rootElement: "grey",
         },
         fill:{
             point: false,
@@ -169,6 +170,7 @@ const ColorTheme = {
             grid:"gray",
             canvas: "black",
             text: "white",
+            rootElement: "grey",
         },
         fill:{
             point: false,
