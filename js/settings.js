@@ -75,6 +75,7 @@ const IMPORT_STRING_EXAMPLES = [
 
 var settings = {
     theme: "white",
+    message: "alert",//"console",
     bendFormInputType: 0,
     preview:{
         edgeLength: true,

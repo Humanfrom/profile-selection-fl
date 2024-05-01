@@ -767,14 +767,36 @@ var bend = {
 
             if (!strengthTable.values[row][col]) {
                 br = true
-                alert(`Инструмент ${instrument.description.replace('<br>', '\n')} не подходит по тоннажу для толщины ${settings.preview.lineWidth}мм`)
+                const messageStrength = `Инструмент ${instrument.description.replace('<br>', '\n')} не подходит по тоннажу для толщины ${settings.preview.lineWidth}мм`;
+                if(settings.message == 'console'){
+                    console.log(messageStrength);
+                } else {
+                    alert(messageStrength)
+                }
             }
+
+            const currentWeight = strengthTable.values[row][col] * (parsed.length / 100) / 1000; 
+
+            /*if (currentWeight > 100) {
+                br = true
+                const messageWeigth = `Инструмент ${instrument.description.replace('<br>', '\n')} не подходит по тоннажу для длинны ${parsed.length}мм`;
+                if(settings.message == 'console'){
+                    console.log(messageWeigth);
+                } else {
+                    alert(messageWeigth)
+                }
+            }*/
 
             const resultB = Math.round(min * 100) * this.calculateB(angleOfMin)
 
             if (resultB > instrument.deg90) {
                 br = true
-                alert(`Инструмент ${instrument.description.replace('<br>', '\n')} не подходит для гибки данной детали согласно минимальному отгибу B=${resultB}мм`)
+                const messageInstrument = `Инструмент ${instrument.description.replace('<br>', '\n')} не подходит для гибки данной детали согласно минимальному отгибу B=${resultB}мм`;
+                if(settings.message == 'console'){
+                    console.log(messageInstrument);
+                } else {
+                    alert(messageInstrument);
+                }
             }
         }
 

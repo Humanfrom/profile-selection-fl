@@ -309,8 +309,6 @@ function calcBendPoint(simEndHandle = null){
     debug["current permutation: "] = `${bend.currentBendOrd + 1} of ${bend.bendOrd.length}`;
     debug["current bend: "] = `${bend.currentBend + 1} of ${bend.initialPoints.length}`;
     bend.points = [];
-
-
     // debug = [];
     {
         const instrument = pressVariants[uiController.pressList.selectedPress]
@@ -318,9 +316,12 @@ function calcBendPoint(simEndHandle = null){
         const row = strengthTable.rows.indexOf(+settings.preview.lineWidth)
         const col = strengthTable.columns.indexOf(instrument.gap)
 
+        var parsed = bend.parseForm();
+        const currentWeight = strengthTable.values[row][col] * (parsed.length / 100); 
+
         var f = document.querySelector("#unactive-popup > h2").innerText = `${bend.currentBendOrd + 1} из ${bend.bendOrd.length}`;
         document.querySelector("#unactive-popup > h2:nth-of-type(2)").innerHTML = pressVariants[uiController.pressList.selectedPress].description;
-        document.querySelector("#unactive-popup > h2:last-child").innerHTML = `Усилие: ${strengthTable.values[row][col]}т`
+        document.querySelector("#unactive-popup > h2:last-child").innerHTML = `Усилие: ${currentWeight.toFixed(2)}т`
         if(controller.drawCombinations){
             _calc();
         }else{
